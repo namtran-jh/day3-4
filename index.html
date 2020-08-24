@@ -5,15 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./styles.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title> Day 3-4 </title>
 </head>
 
 <body>
+    <div id="container">
+        <div id="mainContainer">
+            <div id="welcomeTitle"> JOURNEY HORIZON INTERVIEW TEST </div>
 
+            <div id="timerArea">
+                <div class="timerCountingSet">
+                    <div id="hoursCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                    <p class="timerCountingSet-unit">HOURS</p>
+                </div>
+                <div class="gapBetweenTwoCountingNumber">:</div>
+                <div class="timerCountingSet">
+                    <div id="minutesCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                    <p class="timerCountingSet-unit">MINUTES</p>
+                </div>
+                <div class="gapBetweenTwoCountingNumber">:</div>
+                <div class="timerCountingSet">
+                    <div id="secondsCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                    <p class="timerCountingSet-unit">SECONDS</p>
+                </div>
+            </div>
 
-    <script src="/data.js"></script>
-    <script src="/script.js"></script>
+            <div id="timerControlButton">
+                <button id="startButton" class="activatedButton" onclick="startTimerForQA()"> START </button>
+                <button id="finishButton" class="deactivatedButton" onclick="finishTimerForQA()"> FINISH </button>
+            </div>
+
+            <div class="gapSeparateTwoArea"></div>
+
+            <div id="questionAndAnswerArea">
+                <!-- <div class="eachSetOfQuestionAndAnswer">
+                    <h2 id="questionContent"><span>Question: </span>Is this a question?</h2>
+                    <textarea id="answerContent" type="text" placeholder="Enter your answer here..."></textarea>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="notificationContainer">
+            <div id="warningNotification" class="setOfNotificationMessage">
+                <p><strong>Warning!</strong> You didn't type anything. Goodbye...</p>
+            </div>
+            <div id="successNotification" class="setOfNotificationMessage">
+                <p><strong>Congratulation!</strong> You have done the question...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./data/question.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
