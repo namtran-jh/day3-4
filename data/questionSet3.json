@@ -1,0 +1,87 @@
+[{
+        "id": 0,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "What is the result of (5*2+5)?",
+        "choices": [{
+                "answerContent": "5+2*5",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "15",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "35",
+                "isCorrect": false
+            }
+        ],
+        "durationTime": 75
+    },
+    {
+        "id": 1,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "Where do the dolphin live?",
+        "choices": [{
+            "answerContent": "Ocean",
+            "isCorrect": true
+        }, {
+            "answerContent": "Sea",
+            "isCorrect": true
+        }, {
+            "answerContent": "Lake",
+            "isCorrect": false
+        }, {
+            "answerContent": "Swimming pool",
+            "isCorrect": false
+        }],
+        "durationTime": 90
+    },
+    {
+        "id": 2,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "How can we avoid fire from having a bbq?",
+        "choices": [{
+            "answerContent": "Cancel the bbq",
+            "isCorrect": true
+        }, {
+            "answerContent": "Prepare safe solutions",
+            "isCorrect": true
+        }, {
+            "answerContent": "Buy the bbq-ed food outside",
+            "isCorrect": true
+        }, {
+            "answerContent": "Use water to do the bbq",
+            "isCorrect": false
+        }],
+        "durationTime": 45
+    },
+    {
+        "id": 3,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "What time is the end of the afternoon breaktime?",
+        "choices": [{
+            "answerContent": "13:10",
+            "isCorrect": true
+        }, {
+            "answerContent": "01:10 PM",
+            "isCorrect": true
+        }, {
+            "answerContent": "10:13",
+            "isCorrect": false
+        }],
+        "durationTime": 20
+    },
+    {
+        "id": 4,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "This is an great website, isn't this?",
+        "choices": [{
+            "answerContent": "Absolute awesome!",
+            "isCorrect": true
+        }, {
+            "answerContent": "Pretty good!",
+            "isCorrect": true
+        }],
+        "durationTime": 30
+    }
+]

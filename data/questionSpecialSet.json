@@ -1,0 +1,117 @@
+[{
+        "id": 0,
+        "type": "whQuestion",
+        "questionContent": "What is your favourite anime? Tell us why you love it, otherwise why you don't?",
+        "durationTime": 510
+    },
+    {
+        "id": 1,
+        "type": "singleChoiceQuestion",
+        "questionContent": "What is the main color of our company's logo?",
+        "choices": [{
+                "answerContent": "Blue",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "White",
+                "isCorrect": false
+            },
+            {
+                "answerContent": "Black",
+                "isCorrect": false
+            }
+        ],
+        "durationTime": 30
+    },
+    {
+        "id": 2,
+        "type": "whQuestion",
+        "questionContent": "Both dogs and cats are adorable pet, which of them you love the most? And why?",
+        "durationTime": 90
+    },
+    {
+        "id": 3,
+        "type": "singleChoiceQuestion",
+        "questionContent": "How many characters included in this question?",
+        "choices": [{
+            "answerContent": "46",
+            "isCorrect": true
+        }, {
+            "answerContent": "40",
+            "isCorrect": false
+        }, {
+            "answerContent": "52",
+            "isCorrect": false
+        }],
+        "durationTime": 45
+    },
+    {
+        "id": 4,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "What is the result of (5*2+5)?",
+        "choices": [{
+                "answerContent": "5+2*5",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "15",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "35",
+                "isCorrect": false
+            }
+        ],
+        "durationTime": 75
+    },
+    {
+        "id": 5,
+        "type": "whQuestion",
+        "questionContent": "If you have 1 billion dollars, what will be your future plan?",
+        "durationTime": 120
+    },
+    {
+        "id": 6,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "How can we avoid fire from having a bbq?",
+        "choices": [{
+            "answerContent": "Cancel the bbq",
+            "isCorrect": true
+        }, {
+            "answerContent": "Prepare safe solutions",
+            "isCorrect": true
+        }, {
+            "answerContent": "Buy the bbq-ed food outside",
+            "isCorrect": true
+        }, {
+            "answerContent": "Use water to do the bbq",
+            "isCorrect": false
+        }],
+        "durationTime": 45
+    },
+    {
+        "id": 7,
+        "type": "whQuestion",
+        "questionContent": "Write a letter to your leader for being absent for a week!",
+        "durationTime": 600
+    },
+    {
+        "id": 8,
+        "type": "whQuestion",
+        "questionContent": "What type of work environment do you prefer?",
+        "durationTime": 180
+    },
+    {
+        "id": 9,
+        "type": "multipleChoicesQuestion",
+        "questionContent": "This is an great website, isn't this?",
+        "choices": [{
+            "answerContent": "Absolute awesome!",
+            "isCorrect": true
+        }, {
+            "answerContent": "Pretty good!",
+            "isCorrect": true
+        }],
+        "durationTime": 30
+    }
+]

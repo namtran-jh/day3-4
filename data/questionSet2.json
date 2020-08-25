@@ -1,0 +1,81 @@
+[{
+        "id": 0,
+        "type": "singleChoiceQuestion",
+        "questionContent": "What is the main color of our company's logo?",
+        "choices": [{
+                "answerContent": "Blue",
+                "isCorrect": true
+            },
+            {
+                "answerContent": "White",
+                "isCorrect": false
+            },
+            {
+                "answerContent": "Black",
+                "isCorrect": false
+            }
+        ],
+        "durationTime": 30
+    },
+    {
+        "id": 1,
+        "type": "singleChoiceQuestion",
+        "questionContent": "Which studio is better?",
+        "choices": [{
+            "answerContent": "Marvel",
+            "isCorrect": true
+        }, {
+            "answerContent": "DC",
+            "isCorrect": false
+        }],
+        "durationTime": 20
+    },
+    {
+        "id": 2,
+        "type": "singleChoiceQuestion",
+        "questionContent": "Inside which HTML element do we put the JavaScript?",
+        "choices": [{
+            "answerContent": "&lt;script&gt;",
+            "isCorrect": true
+        }, {
+            "answerContent": "&lt;js&gt;",
+            "isCorrect": false
+        }, {
+            "answerContent": "&lt;scripting&gt;",
+            "isCorrect": false
+        }, {
+            "answerContent": "&lt;javascript&gt;",
+            "isCorrect": false
+        }],
+        "durationTime": 10
+    },
+    {
+        "id": 3,
+        "type": "singleChoiceQuestion",
+        "questionContent": "How many characters included in this question?",
+        "choices": [{
+            "answerContent": "46",
+            "isCorrect": true
+        }, {
+            "answerContent": "40",
+            "isCorrect": false
+        }, {
+            "answerContent": "52",
+            "isCorrect": false
+        }],
+        "durationTime": 45
+    },
+    {
+        "id": 4,
+        "type": "singleChoiceQuestion",
+        "questionContent": "Which laptop is belong to Apple?",
+        "choices": [{
+            "answerContent": "Macbook Pro 2020",
+            "isCorrect": true
+        }, {
+            "answerContent": "Dell Inspiration 16",
+            "isCorrect": false
+        }],
+        "durationTime": 30
+    }
+]
