@@ -1,0 +1,591 @@
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+#container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-image: url('../images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#mainContainer {
+    width: 60%;
+    max-width: 100%;
+    max-height: 100vh;
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 0;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px #000;
+}
+
+@media only screen and (min-width: 1600px) {
+    #mainContainer {
+        width: 70%;
+    }
+}
+
+#welcomeTitleArea {
+    font-size: 12px;
+    font-weight: 100;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+@media only screen and (min-width: 1600px) {
+    #welcomeTitleArea {
+        font-size: 14px;
+    }
+}
+
+.horizontalGapSeparateTwoArea {
+    width: 100%;
+    margin-top: 20px;
+    border-top: 2px dashed #fff;
+}
+
+.verticalGapSeparateTwoArea {
+    height: 100%;
+    margin-top: 20px;
+    border-right: 2px dashed #fff;
+}
+
+#settingArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#inputSettingArea {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#questionDataInputFile {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 150px;
+}
+
+@media only screen and (min-width: 1600px) {
+    #questionDataInputFile {
+        width: 200px;
+    }
+}
+
+#questionDataInputFile:hover {
+    cursor: pointer;
+}
+
+#inputFileButton {
+    margin: 10px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (min-width: 1600px) {
+    #inputFileButton {
+        width: 170px;
+    }
+}
+
+#inputFileButton>img {
+    width: 100px;
+}
+
+@media only screen and (min-width: 1600px) {
+    #inputFileButton>img {
+        width: 130px;
+    }
+}
+
+#inputFileName {
+    font-size: 12px;
+    animation-name: loading;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@media only screen and (min-width: 1600px) {
+    #inputFileName {
+        font-size: 16px;
+    }
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-10%);
+    }
+    50% {
+        transform: translateX(10%);
+    }
+    100% {
+        transform: translateX(-10%);
+    }
+}
+
+#inputControlButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+#inputControlButton button {
+    padding: 7px 30px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+@media only screen and (min-width: 1600px) {
+    #inputControlButton button {
+        padding: 10px 30px;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+}
+
+#inputControlButton button:focus {
+    outline: none;
+}
+
+#timerSettingArea {
+    display: flex;
+    flex-grow: 4;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#timerDisplay {
+    margin: 5px 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media only screen and (min-width: 1600px) {
+    #timerDisplay {
+        margin: 5px 0 30px;
+    }
+}
+
+.timerCountingSet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 110px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .timerCountingSet {
+        width: 135px;
+    }
+}
+
+.timerCountingSet-countingNumber {
+    font-size: 80px;
+    font-weight: 400;
+}
+
+@media only screen and (min-width: 1600px) {
+    .timerCountingSet-countingNumber {
+        font-size: 100px;
+    }
+}
+
+.timerCountingSet-unit {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+}
+
+@media only screen and (min-width: 1600px) {
+    .timerCountingSet-unit {
+        font-size: 22px;
+    }
+}
+
+.gapBetweenTwoCountingNumber {
+    font-size: 60px;
+    margin: 0 30px;
+    /* color: transparent; */
+}
+
+@media only screen and (min-width: 1600px) {
+    .colon {
+        font-size: 70px;
+    }
+}
+
+#timerControlButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#timerControlButton button {
+    padding: 7px 30px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+@media only screen and (min-width: 1600px) {
+    #timerControlButton button {
+        padding: 10px 30px;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+}
+
+#timerControlButton button:focus {
+    outline: none;
+}
+
+.activatedButton {
+    color: rgb(255, 196, 0);
+    background-color: #fff;
+}
+
+.activatedButton:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px #fff;
+    color: #fff;
+    background-color: rgb(255, 196, 0);
+}
+
+.deactivatedButton {
+    color: rgb(88, 88, 88);
+    background-color: #ccc;
+}
+
+.deactivatedButton:hover {
+    cursor: none;
+    pointer-events: none;
+}
+
+#questionAndAnswerArea {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* overflow: auto; */
+}
+
+.eachSetOfQuestionAndAnswer {
+    /* margin-bottom: 20px; */
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.eachSetOfQuestionAndAnswer h2 {
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+@media only screen and (min-width: 1600px) {
+    .eachSetOfQuestionAndAnswer h2 {
+        font-size: 20px;
+    }
+}
+
+.eachSetOfQuestionAndAnswer h2>span {
+    font-size: 16px;
+    font-weight: 100;
+}
+
+@media only screen and (min-width: 1600px) {
+    .eachSetOfQuestionAndAnswer h2>span {
+        font-size: 18px;
+    }
+}
+
+.eachSetOfQuestionAndAnswer textarea {
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 400;
+    text-align: justify;
+    padding: 5px 10px;
+    width: 100%;
+    height: 330px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .eachSetOfQuestionAndAnswer textarea {
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 10px 15px;
+        height: 370px;
+    }
+}
+
+.eachSetOfQuestionAndAnswer textarea:focus {
+    outline: none;
+    background-color: #fff;
+}
+
+.eachSingleChoiceAnswer {
+    margin: 0 0 10px 30px;
+    font-size: 16px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .eachSingleChoiceAnswer {
+        font-size: 18px;
+    }
+}
+
+#questionListNavigationBar {
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.navigationButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 300;
+    border-radius: 5px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .navigationButton {
+        width: 40px;
+        height: 40px;
+        border-radius: 7px;
+        font-size: 18px;
+    }
+}
+
+.unshowedNavigationButton {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.unshowedNavigationButton:hover {
+    color: #ff9800;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.showingNavigationButton {
+    color: #ff9800;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    cursor: default;
+}
+
+.showingNavigationButton:hover {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.showedNavigationButton {
+    color: #fff;
+    background-color: rgb(255, 255, 255, 0.5);
+    border: 1px solid rgb(255, 255, 255, 0.5);
+}
+
+.showedNavigationButton:hover {
+    color: #ff9800;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.outOfTimeNavigationButton {
+    color: rgb(88, 88, 88);
+    background-color: #ccc;
+    border: 1px solid rgba(204, 204, 204, 0.5);
+    cursor: default;
+}
+
+.outOfTimeNavigationButton:hover {
+    pointer-events: none;
+}
+
+#footnoteOfNavigationBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#footnoteOfNavigationBar:hover {
+    cursor: default;
+}
+
+.footnoteOfNavigationBar-eachType {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px 0 5px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    font-weight: 300;
+    border-radius: 2px;
+}
+
+.footnoteOfNavigationBar-title {
+    margin-right: 5px;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+#footnote-unshowedNavigationButton {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#footnote-showingNavigationButton {
+    color: #ff9800;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+#footnote-showedNavigationButton {
+    color: #fff;
+    background-color: rgb(255, 255, 255, 0.5);
+    border: 1px solid rgb(255, 255, 255, 0.5);
+}
+
+#footnote-outOfTimeNavigationButton {
+    color: rgb(88, 88, 88);
+    background-color: #ccc;
+    border: 1px solid rgba(204, 204, 204, 0.5);
+    cursor: default;
+}
+
+
+/* Ending Page */
+
+#endNotificationAndLinkOfAdminPage {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+#endNotification {
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+#linkOfAdminPage {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#linkOfAdminPage a {
+    color: rgb(255, 196, 0);
+    background-color: #fff;
+    padding: 5px 15px;
+    border-radius: 15px;
+    text-decoration: none;
+}
+
+#linkOfAdminPage a:hover {
+    background-color: rgb(255, 196, 0);
+    color: white;
+}
+
+
+/* Notification */
+
+.notificationContainer {
+    position: absolute;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.setOfNotificationMessage {
+    height: 50px;
+    font-size: 14px;
+    display: none;
+    opacity: 0;
+    align-items: center;
+    padding: 0px 20px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .setOfNotificationMessage {
+        height: 60px;
+        font-size: 16px;
+    }
+}
+
+#warningNotification {
+    background-color: #ff9800;
+}
+
+#successNotification {
+    background-color: #28d828;
+}

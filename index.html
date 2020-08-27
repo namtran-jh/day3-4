@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./styles.css" rel="stylesheet" type="text/css">
+    <link href="./styles/index.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title> Day 3-4 </title>
 </head>
@@ -12,52 +12,83 @@
 <body>
     <div id="container">
         <div id="mainContainer">
-            <div id="welcomeTitle"> JOURNEY HORIZON INTERVIEW TEST </div>
+            <div id="welcomeTitleArea"> JOURNEY HORIZON TEST </div>
 
-            <div id="timerArea">
-                <div class="timerCountingSet">
-                    <div id="hoursCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
-                    <p class="timerCountingSet-unit">HOURS</p>
+            <div class="horizontalGapSeparateTwoArea"></div>
+
+            <div id="settingArea">
+                <div id="inputSettingArea">
+                    <input type="file" id="questionDataInputFile" onchange="viewInputFileName()">
+                    <label id="inputFileButton" for="questionDataInputFile">
+                      <img src="./images/fileUploadIcon.png" alt="Upload file"/>
+                      <div id="inputFileName"></div>
+                    </label>
+                    <div id="inputControlButton">
+                        <button id="loadButton" class="activatedButton" onclick="loadInputFile()"> LOAD FILE </button>
+                    </div>
                 </div>
-                <div class="gapBetweenTwoCountingNumber">:</div>
-                <div class="timerCountingSet">
-                    <div id="minutesCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
-                    <p class="timerCountingSet-unit">MINUTES</p>
-                </div>
-                <div class="gapBetweenTwoCountingNumber">:</div>
-                <div class="timerCountingSet">
-                    <div id="secondsCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
-                    <p class="timerCountingSet-unit">SECONDS</p>
+
+                <div class="verticalGapSeparateTwoArea"></div>
+
+                <div id="timerSettingArea">
+                    <div id="timerDisplay">
+                        <div class="timerCountingSet">
+                            <div id="hoursCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                            <p class="timerCountingSet-unit">HOURS</p>
+                        </div>
+                        <div class="gapBetweenTwoCountingNumber">:</div>
+                        <div class="timerCountingSet">
+                            <div id="minutesCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                            <p class="timerCountingSet-unit">MINUTES</p>
+                        </div>
+                        <div class="gapBetweenTwoCountingNumber">:</div>
+                        <div class="timerCountingSet">
+                            <div id="secondsCountingSet-countingNumber" class="timerCountingSet-countingNumber">00</div>
+                            <p class="timerCountingSet-unit">SECONDS</p>
+                        </div>
+                    </div>
+
+                    <div id="timerControlButton">
+                        <button id="startButton" class="deactivatedButton" onclick="startTimerForQA()"> START </button>
+                        <button id="finishButton" class="deactivatedButton" onclick="finishTimerForQA()"> FINISH </button>
+                    </div>
                 </div>
             </div>
 
-            <div id="timerControlButton">
-                <button id="startButton" class="activatedButton" onclick="startTimerForQA()"> START </button>
-                <button id="finishButton" class="deactivatedButton" onclick="finishTimerForQA()"> FINISH </button>
+            <div class="horizontalGapSeparateTwoArea"></div>
+
+            <div id="questionAndAnswerArea"></div>
+
+            <div id="endNotificationAndLinkOfAdminPage">
+                <div id="endNotification">Your test is over</div>
+                <div id="linkOfAdminPage">Click <a href="/admin.html">here</a> to get the answer!</div>
             </div>
 
-            <div class="gapSeparateTwoArea"></div>
+            <div id="questionListNavigationBar"></div>
 
-            <div id="questionAndAnswerArea">
-                <!-- <div class="eachSetOfQuestionAndAnswer">
-                    <h2 id="questionContent"><span>Question: </span>Is this a question?</h2>
-                    <textarea id="answerContent" type="text" placeholder="Enter your answer here..."></textarea>
-                </div> -->
+            <div id="footnoteOfNavigationBar">
+                <div class="footnoteOfNavigationBar-eachType" id="footnote-unshowedNavigationButton">#</div>
+                <div class="footnoteOfNavigationBar-title">Unshowed Question</div>
+                <div class="footnoteOfNavigationBar-eachType" id="footnote-showedNavigationButton">#</div>
+                <div class="footnoteOfNavigationBar-title">Showed Question (still valid)</div>
+                <div class="footnoteOfNavigationBar-eachType" id="footnote-showingNavigationButton">#</div>
+                <div class="footnoteOfNavigationBar-title">Showing Question</div>
+                <div class="footnoteOfNavigationBar-eachType" id="footnote-outOfTimeNavigationButton">#</div>
+                <div class="footnoteOfNavigationBar-title">Out-of-time Question</div>
             </div>
         </div>
 
         <div class="notificationContainer">
             <div id="warningNotification" class="setOfNotificationMessage">
-                <p><strong>Warning!</strong> You didn't type anything. Goodbye...</p>
+                <p><strong>WARNING!</strong> You haven't fulfill the test. Please check carefully!</p>
             </div>
             <div id="successNotification" class="setOfNotificationMessage">
-                <p><strong>Congratulation!</strong> You have done the question...</p>
+                <p><strong>CONGRATULATION!</strong> You have done the question!</p>
             </div>
         </div>
     </div>
 
-    <script src="./data/question.js"></script>
-    <script src="script.js"></script>
+    <script type="text/javascript" src="./script/index.js"></script>
 </body>
 
 </html>
