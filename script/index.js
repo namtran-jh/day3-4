@@ -18,22 +18,22 @@ const timerForQAConfig = {
 // Import data file
 
 function viewInputFileName() {
-    const inputFile = document.getElementById("inputQuestionDataFile");
+    const inputFile = document.getElementById("questionDataInputFile");
     const inputFileName = document.getElementById("inputFileName");
 
-    if (inputFile.value === "") inputFileName.innerHTML = "Nothing is selected";
-    else inputFileName.innerHTML = inputFile.value.substr(12);
+    if (!inputFile.files[0]) inputFileName.innerHTML = "Nothing is selected";
+    else inputFileName.innerHTML = inputFile.files[0].name;
 }
 
 function loadInputFile() {
-    let input, file, fr;
+    let input, myFile, fileReader;
 
     if (typeof window.FileReader !== 'function') {
         alert("The file API isn't supported on this browser yet.");
         return;
     }
 
-    input = document.getElementById('inputQuestionDataFile');
+    input = document.getElementById('questionDataInputFile');
     if (!input) {
         alert("Um, couldn't find the fileinput element.");
     } else if (!input.files) {
@@ -41,12 +41,12 @@ function loadInputFile() {
     } else if (!input.files[0]) {
         alert("Please select a file before clicking 'Load file'");
     } else {
-        file = input.files[0];
-        fr = new FileReader();
-        fr.onload = receivedText;
-        fr.readAsText(file);
+        myFile = input.files[0];
+        fileReader = new FileReader();
+        fileReader.onload = receivedText;
+        fileReader.readAsText(myFile);
         switchModeOfTimerControlButton(LOAD);
-        input.setAttribute("disabled", true);
+        lockUploadFileInputButton(true);
     }
 
     function receivedText(e) {
@@ -87,6 +87,11 @@ function insertQuestionStatusVariableForEachQuestionData() {
     })
 }
 
+function lockUploadFileInputButton(isLock) {
+    if (isLock) document.getElementById('questionDataInputFile').setAttribute("disabled", true);
+    else document.getElementById('questionDataInputFile').removeAttribute("disabled");
+}
+
 // Start - Finish
 
 function startTimerForQA() {
@@ -98,11 +103,18 @@ function startTimerForQA() {
 
 async function finishTimerForQA() {
     deactivateTimer();
+
+    if (!checkIsFulfillAllQuestion()) {
+        changeCurrentTimerAndQA(timerForQAConfig.currentSetOfQA.id);
+        await showFinishedNotificationMessage("warning");
+        return;
+    }
+
     changeDisplayStatusOfSpecificElement("questionAndAnswerArea", "hide");
     changeDisplayStatusOfSpecificElement("questionListNavigationBar", "hide");
     changeDisplayStatusOfSpecificElement("endNotificationAndLinkOfAdminPage", "show");
     deactivateAllButtons("finishButton");
-    // await showFinishedNotificationMessage();
+    await showFinishedNotificationMessage("success");
     saveAllAnswerDataToLocalStorage();
     switchModeOfTimerControlButton(FINISH);
 }
@@ -116,7 +128,7 @@ function switchModeOfTimerControlButton(buttonMode) {
     else if (buttonMode === START) renderNewButtonModeForUI("finishButton", "startButton");
     else if (buttonMode === FINISH) {
         renderNewButtonModeForUI("loadButton", "finishButton");
-        document.getElementById('inputQuestionDataFile').removeAttribute("disabled");
+        lockUploadFileInputButton(false);
     }
 }
 
@@ -439,13 +451,19 @@ function updateDurationTimeInListItemConfig(questionIndex, timerData) {
 
 // Notification
 
-function showFinishedNotificationMessage() {
+function checkIsFulfillAllQuestion() {
+    let isFulfill = true;
+    timerForQAConfig.listOfItemQA.forEach(item => {
+        if (item.type === "whQuestion" && item.durationTime !== 0 && item.myAnswer === "") isFulfill = false;
+        if (item.type === "singleChoiceQuestion" && item.durationTime !== 0 && item.myAnswer.answerContent === undefined) isFulfill = false;
+        if (item.type === "multipleChoicesQuestion" && item.durationTime !== 0 && item.myAnswer.length === 0) isFulfill = false;
+    })
+    return isFulfill;
+}
+
+function showFinishedNotificationMessage(messageStatus) {
     return new Promise(async resolve => {
-        const textAreaValue = document.getElementById("answerContent").value;
-
-        if (textAreaValue !== "") await addEffectForNotificationMessage("successNotification", 1000);
-        else await addEffectForNotificationMessage("warningNotification", 1000);
-
+        await addEffectForNotificationMessage(`${messageStatus}Notification`, 2000);
         resolve();
     })
 }
