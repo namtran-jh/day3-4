@@ -5,3 +5,5 @@
  - Do not use any library
  - Please utilise all the thing that you have read about writing good code
  - Consider this as a real life project and there will be more future teammates working on this after you have done
+
+ `ACRONYM` using in this code: { QA: Question and Answer }

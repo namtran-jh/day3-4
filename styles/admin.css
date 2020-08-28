@@ -1,3 +1,5 @@
+/* acronym { QA: Question and Answer } */
+
 * {
     font-family: 'Rubik', sans-serif;
 }
@@ -6,7 +8,7 @@ body {
     margin: 0;
 }
 
-#adminPage {
+#adminPageContainer {
     height: 100vh;
     display: flex;
     flex-direction: column;

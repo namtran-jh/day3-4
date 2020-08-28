@@ -611,6 +611,12 @@ body {
     justify-content: center;
 }
 
+@media only screen and (min-width: 1600px) {
+    .popupBox {
+        width: 35%;
+    }
+}
+
 .popupTitle {
     font-size: 20px;
     font-weight: 500;
@@ -626,6 +632,7 @@ body {
     color: #000;
     margin-bottom: 15px;
     padding: 0 20px;
+    text-align: center;
 }
 
 .popupControlButton {

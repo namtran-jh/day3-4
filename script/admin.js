@@ -6,7 +6,6 @@ const adminPageConfig = {
 };
 
 (function loadAdminPage() {
-    restartHtmlOfListItemQA(adminPageConfig.htmlOfListItemQA);
     const allAnswerData = loadAllAnswerDataFromLocalStorage();
     allAnswerData.forEach((item, index) => {
         if (item.type === "whQuestion") loadAnswerOfWhQuestionToUI(index, item);
@@ -15,10 +14,6 @@ const adminPageConfig = {
     })
     document.getElementById("listOfItemQA").innerHTML = adminPageConfig.htmlOfListItemQA;
 })();
-
-function restartHtmlOfListItemQA(html) {
-    html = "";
-}
 
 function loadAllAnswerDataFromLocalStorage() {
     return JSON.parse(localStorage.getItem("listOfItemQA"));
