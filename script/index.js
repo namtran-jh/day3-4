@@ -43,14 +43,18 @@ function loadInputFile() {
     } else {
         myFile = input.files[0];
         fileReader = new FileReader();
-        fileReader.onload = receivedText;
+        fileReader.onload = loadCompletelyFileData;
         fileReader.readAsText(myFile);
         switchModeOfTimerControlButton(LOAD);
         lockUploadFileInputButton(true);
     }
 
-    function receivedText(e) {
+    function loadCompletelyFileData(e) {
         timerForQAConfig.listOfItemQA = JSON.parse(e.target.result);
+        modifyListOfItemQAInConfig();
+    }
+
+    function modifyListOfItemQAInConfig() {
         shuffleQuestionList(timerForQAConfig.listOfItemQA);
         insertAnswerVariableForEachQuestionData();
         insertQuestionStatusVariableForEachQuestionData();
@@ -92,34 +96,36 @@ function lockUploadFileInputButton(isLock) {
     else document.getElementById('questionDataInputFile').removeAttribute("disabled");
 }
 
-// Start - Finish
+// Start/Finish timer for QA
 
 function startTimerForQA() {
-    activateTimerForUI();
     renderQuestionForUI();
+    renderTimerForUI();
     renderQuestionListNavigationForUI();
     switchModeOfTimerControlButton(START);
 }
 
-async function finishTimerForQA() {
+async function finishTimerForQA(isVerified) {
     deactivateTimer();
 
-    if (!checkIsFulfillAllQuestion()) {
-        changeCurrentTimerAndQA(timerForQAConfig.currentSetOfQA.id);
-        await showFinishedNotificationMessage("warning");
-        return;
+    if (!isVerified) {
+        if (!checkIsFulfillAllQuestion()) {
+            renderPopupOfVerifyFinishQA();
+            return;
+        }
     }
 
+    saveAllAnswerDataToLocalStorage();
+    updateCurrentTimerForUI({ second: 0, minute: 0, hour: 0 });
     changeDisplayStatusOfSpecificElement("questionAndAnswerArea", "hide");
     changeDisplayStatusOfSpecificElement("questionListNavigationBar", "hide");
     changeDisplayStatusOfSpecificElement("endNotificationAndLinkOfAdminPage", "show");
     deactivateAllButtons("finishButton");
     await showFinishedNotificationMessage("success");
-    saveAllAnswerDataToLocalStorage();
     switchModeOfTimerControlButton(FINISH);
 }
 
-// Buttons
+// All buttons
 
 function switchModeOfTimerControlButton(buttonMode) {
     timerForQAConfig.timerControlButtonMode = buttonMode;
@@ -145,7 +151,7 @@ function deactivateAllButtons(deactivatedButton) {
     document.getElementById(deactivatedButton).classList.remove("activatedButton");
 }
 
-// Question and Answer
+// QA
 
 function changeCurrentTimerAndQA(id) {
     const questionIndex = timerForQAConfig.listOfItemQA.findIndex(item => item.id === id);
@@ -335,7 +341,7 @@ function autosaveMultipleChoicesAnswer(id, value, isCorrect, isChecked) {
     }
 }
 
-// Navigation
+// Navigation of QA
 
 function renderQuestionListNavigationForUI() {
     const newQuestion = timerForQAConfig.listOfItemQA[0];
@@ -381,7 +387,7 @@ function updateOutOfTimeQuestion(index) {
 
 // Timer
 
-function activateTimerForUI() {
+function renderTimerForUI() {
     const newQuestionId = timerForQAConfig.listOfItemQA[0].id;
     changeCurrentTimerWithNewData(newQuestionId);
 }
@@ -395,13 +401,13 @@ function changeCurrentTimerWithNewData(id) {
 
 function activateTimer(timerData, questionIndex) {
     const detailTimerSet = handleChangingCountingNumber(timerData);
-    updateCurrentTimer(detailTimerSet);
+    updateCurrentTimerForUI(detailTimerSet);
     updateDurationTimeInListItemConfig(questionIndex, timerData);
 
     timerForQAConfig.timerIntervalMethod = setInterval(function() {
         if (timerData > 0) {
             timerData -= 1;
-            updateCurrentTimer(handleChangingCountingNumber(timerData));
+            updateCurrentTimerForUI(handleChangingCountingNumber(timerData));
             updateDurationTimeInListItemConfig(questionIndex, timerData);
             restartCurrentSetOfQAInConfig({ durationTime: timerData });
         } else {
@@ -430,7 +436,7 @@ function handleChangingCountingNumber(time) {
     return { second, minute, hour }
 }
 
-function updateCurrentTimer(detailTimerSet) {
+function updateCurrentTimerForUI(detailTimerSet) {
     const secondsCountingSet = document.getElementById("secondsCountingSet-countingNumber");
     const minutesCountingSet = document.getElementById("minutesCountingSet-countingNumber");
     const hoursCountingSet = document.getElementById("hoursCountingSet-countingNumber");
@@ -517,6 +523,19 @@ function makeNotificationBoxFadeIn(target, time) {
             }
         }, time);
     })
+}
+
+// Popup of finish verify
+
+function renderPopupOfVerifyFinishQA() {
+    changeDisplayStatusOfSpecificElement("popupOfVerificationContainer", "show");
+}
+
+function verifyFinishQA(isVerified) {
+    changeDisplayStatusOfSpecificElement("popupOfVerificationContainer", "hide");
+
+    if (!isVerified) changeCurrentTimerAndQA(timerForQAConfig.currentSetOfQA.id);
+    else finishTimerForQA(true);
 }
 
 // Save data to local storage

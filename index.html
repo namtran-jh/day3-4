@@ -86,6 +86,17 @@
                 <p><strong>CONGRATULATION!</strong> You have done the question!</p>
             </div>
         </div>
+
+        <div id="popupOfVerificationContainer">
+            <div class="popupBox">
+                <div class="popupTitle">!!! WARNING !!!</div>
+                <div class="popupMessage">You haven't fulfill all questions. Please check carefully.</div>
+                <div class="popupControlButton">
+                    <button id="goBackToCheckButton" onclick="verifyFinishQA(false)"> GO BACK TO CHECK </button>
+                    <button id="continueWithoutCheckButton" onclick="verifyFinishQA(true)"> CONTINUE WITHOUT CHECK </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript" src="./script/index.js"></script>
