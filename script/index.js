@@ -271,8 +271,8 @@ function loadSingleChoiceQuestionData(data) {
 
 function loadMultipleChoicesQuestionData(data) {
     const htmlOfAllChoices = data.choices.reduce((str, choice, index) => {
-        const isExist = data.myAnswer.map(item => item.answerContent).includes(choice.answerContent);
-        if (isExist) {
+        const isExist = data.myAnswer.find(item => item.answerContent === choice.answerContent);
+        if (!!isExist) {
             return str += `
               <div class="eachSingleChoiceAnswer">
                 <input type="checkbox" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveMultipleChoicesAnswer(${data.id}, this.value, ${choice.isCorrect}, this.checked)" value="${choice.answerContent}" checked>
