@@ -1,60 +1,60 @@
 [{
         "id": 0,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "What is your favourite anime? Tell us why you love it, otherwise why you don't?",
         "durationTime": 510
     },
     {
         "id": 1,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Summarize Marvel universe in 300 words!",
         "durationTime": 3600
     },
     {
         "id": 2,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Both dogs and cats are adorable pet, which of them you love the most? And why?",
         "durationTime": 90
     },
     {
         "id": 3,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "What do you expect from our company?",
         "durationTime": 90
     },
     {
         "id": 4,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Give us 3 main problems you experienced in working with teammates!",
         "durationTime": 300
     },
     {
         "id": 5,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "If you have 1 billion dollars, what will be your future plan?",
         "durationTime": 120
     },
     {
         "id": 6,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Difference of Western and Eastern people?",
         "durationTime": 60
     },
     {
         "id": 7,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Write a letter to your leader for being absent for a week!",
         "durationTime": 600
     },
     {
         "id": 8,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "What type of work environment do you prefer?",
         "durationTime": 180
     },
     {
         "id": 9,
-        "type": "whQuestion",
+        "type": "WH_QUESTION",
         "questionContent": "Was the bigbang just an accident?",
         "durationTime": 30
     }

@@ -1,6 +1,6 @@
 [{
         "id": 0,
-        "type": "multipleChoicesQuestion",
+        "type": "MULTIPLE_CHOICES_QUESTION",
         "questionContent": "What is the result of (5*2+5)?",
         "choices": [{
                 "answerContent": "5+2*5",
@@ -19,7 +19,7 @@
     },
     {
         "id": 1,
-        "type": "multipleChoicesQuestion",
+        "type": "MULTIPLE_CHOICES_QUESTION",
         "questionContent": "Where do the dolphin live?",
         "choices": [{
             "answerContent": "Ocean",
@@ -38,7 +38,7 @@
     },
     {
         "id": 2,
-        "type": "multipleChoicesQuestion",
+        "type": "MULTIPLE_CHOICES_QUESTION",
         "questionContent": "How can we avoid fire from having a bbq?",
         "choices": [{
             "answerContent": "Cancel the bbq",
@@ -57,7 +57,7 @@
     },
     {
         "id": 3,
-        "type": "multipleChoicesQuestion",
+        "type": "MULTIPLE_CHOICES_QUESTION",
         "questionContent": "What time is the end of the afternoon breaktime?",
         "choices": [{
             "answerContent": "13:10",
@@ -73,7 +73,7 @@
     },
     {
         "id": 4,
-        "type": "multipleChoicesQuestion",
+        "type": "MULTIPLE_CHOICES_QUESTION",
         "questionContent": "This is an great website, isn't this?",
         "choices": [{
             "answerContent": "Absolute awesome!",

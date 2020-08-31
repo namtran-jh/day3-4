@@ -8,12 +8,19 @@ const UNSHOWED = "unshowed",
     SHOWED = "showed",
     OUTOFTIME = "outOfTime";
 
-const timerForQAConfig = {
+const MULTIPLE_CHOICES_QUESTION = "MULTIPLE_CHOICES_QUESTION",
+    SINGLE_CHOICE_QUESTION = "SINGLE_CHOICE_QUESTION",
+    WH_QUESTION = "WH_QUESTION";
+
+const currentData = {
     listOfItemQA: [],
-    currentSetOfQA: {},
+    currentSetOfQA: {}
+};
+// -2
+const timerForQAConfig = {
     timerControlButtonMode: LOAD,
     timerIntervalMethod: null
-}
+};
 
 // Import data file
 
@@ -26,14 +33,13 @@ function viewInputFileName() {
 }
 
 function loadInputFile() {
-    let input, myFile, fileReader;
-
+    //Checking logic
     if (typeof window.FileReader !== 'function') {
         alert("The file API isn't supported on this browser yet.");
         return;
     }
 
-    input = document.getElementById('questionDataInputFile');
+    const input = document.getElementById('questionDataInputFile');
     if (!input) {
         alert("Um, couldn't find the fileinput element.");
     } else if (!input.files) {
@@ -41,8 +47,8 @@ function loadInputFile() {
     } else if (!input.files[0]) {
         alert("Please select a file before clicking 'Load file'");
     } else {
-        myFile = input.files[0];
-        fileReader = new FileReader();
+        const myFile = input.files[0];
+        const fileReader = new FileReader();
         fileReader.onload = loadCompletelyFileData;
         fileReader.readAsText(myFile);
         switchModeOfTimerControlButton(LOAD);
@@ -50,26 +56,26 @@ function loadInputFile() {
     }
 
     function loadCompletelyFileData(e) {
-        timerForQAConfig.listOfItemQA = JSON.parse(e.target.result);
+        currentData.listOfItemQA = JSON.parse(e.target.result);
         modifyListOfItemQAInConfig();
     }
 
     function modifyListOfItemQAInConfig() {
-        shuffleQuestionList(timerForQAConfig.listOfItemQA);
+        shuffleQuestionList(currentData.listOfItemQA);
         insertAnswerVariableForEachQuestionData();
         insertQuestionStatusVariableForEachQuestionData();
     }
 }
 
 function shuffleQuestionList(list) {
-    var currentIndex = list.length,
-        temporaryValue, randomIndex;
+    //Copy - 1
+    let currentIndex = list.length;
 
     while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
+        const randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
 
-        temporaryValue = list[currentIndex];
+        const temporaryValue = list[currentIndex];
         list[currentIndex] = list[randomIndex];
         list[randomIndex] = temporaryValue;
     }
@@ -78,15 +84,16 @@ function shuffleQuestionList(list) {
 }
 
 function insertAnswerVariableForEachQuestionData() {
-    timerForQAConfig.listOfItemQA.forEach(item => {
-        if (item.type === "whQuestion") item.myAnswer = "";
-        else if (item.type === "singleChoiceQuestion") item.myAnswer = {};
-        else if (item.type === "multipleChoicesQuestion") item.myAnswer = [];
+    // - 10
+    currentData.listOfItemQA.forEach(item => {
+        if (item.type === WH_QUESTION) item.myAnswer = "";
+        else if (item.type === SINGLE_CHOICE_QUESTION) item.myAnswer = {};
+        else if (item.type === MULTIPLE_CHOICES_QUESTION) item.myAnswer = [];
     })
 }
 
 function insertQuestionStatusVariableForEachQuestionData() {
-    timerForQAConfig.listOfItemQA.forEach(item => {
+    currentData.listOfItemQA.forEach(item => {
         item.status = UNSHOWED;
     })
 }
@@ -154,7 +161,7 @@ function deactivateAllButtons(deactivatedButton) {
 // QA
 
 function changeCurrentTimerAndQA(id) {
-    const questionIndex = timerForQAConfig.listOfItemQA.findIndex(item => item.id === id);
+    const questionIndex = currentData.listOfItemQA.findIndex(item => item.id === id);
 
     deactivateTimer();
 
@@ -165,10 +172,10 @@ function changeCurrentTimerAndQA(id) {
 
     if (checkOneQuestionIsOutOfTime(id)) {
         if (checkIsLastQuestion(id)) {
-            changeCurrentTimerAndQA(timerForQAConfig.listOfItemQA[0].id);
+            changeCurrentTimerAndQA(currentData.listOfItemQA[0].id);
             return;
         } else {
-            changeCurrentTimerAndQA(timerForQAConfig.listOfItemQA[questionIndex + 1].id);
+            changeCurrentTimerAndQA(currentData.listOfItemQA[questionIndex + 1].id);
             return;
         }
     }
@@ -179,31 +186,24 @@ function changeCurrentTimerAndQA(id) {
 }
 
 function checkAllQuestionIsOutOfTime() {
-    let isOutOfTime = true;
-    timerForQAConfig.listOfItemQA.forEach(item => {
-        if (item.status !== OUTOFTIME) isOutOfTime = false;
-    })
-    return isOutOfTime;
+    //Check for each -1
+    return currentData.listOfItemQA.every(item => item.status === OUTOFTIME);
 }
 
 function checkOneQuestionIsOutOfTime(id) {
-    let isOutOfTime = false;
-    timerForQAConfig.listOfItemQA.forEach(item => {
-        if (item.id === id && item.status === OUTOFTIME) isOutOfTime = true;
-    })
-    return isOutOfTime;
+    //Check for each -1
+    if (currentData.listOfItemQA.filter(item => item.id === id)[0].status === OUTOFTIME) return true;
+    else return false;
 }
 
 function checkIsLastQuestion(id) {
-    let isLastQuestion = false;
-    timerForQAConfig.listOfItemQA.forEach((item, index) => {
-        if (item.id === id && index === timerForQAConfig.listOfItemQA.length - 1) isLastQuestion = true;
-    })
-    return isLastQuestion;
+    //Check for each -1
+    if (currentData.listOfItemQA.findIndex(item => item.id === id) === currentData.listOfItemQA.length - 1) return true;
+    else return false;
 }
 
 function renderQuestionForUI() {
-    const newQuestion = timerForQAConfig.listOfItemQA[0];
+    const newQuestion = currentData.listOfItemQA[0];
     changeCurrentQuestionWithNewData(newQuestion.id);
     changeDisplayStatusOfSpecificElement("questionAndAnswerArea", "show");
     changeDisplayStatusOfSpecificElement("questionListNavigationBar", "show");
@@ -216,18 +216,18 @@ function changeDisplayStatusOfSpecificElement(elementId, status) {
 }
 
 function changeCurrentQuestionWithNewData(id) {
-    const currentQuestion = timerForQAConfig.listOfItemQA.filter(item => item.id === id)[0];
+    const currentQuestion = currentData.listOfItemQA.filter(item => item.id === id)[0];
 
     restartCurrentSetOfQAInConfig(currentQuestion);
 
-    if (currentQuestion.type === "whQuestion") loadWhQuestionData(currentQuestion);
-    else if (currentQuestion.type === "singleChoiceQuestion") loadSingleChoiceQuestionData(currentQuestion);
-    else if (currentQuestion.type === "multipleChoicesQuestion") loadMultipleChoicesQuestionData(currentQuestion);
+    if (currentQuestion.type === WH_QUESTION) loadWhQuestionData(currentQuestion);
+    else if (currentQuestion.type === SINGLE_CHOICE_QUESTION) loadSingleChoiceQuestionData(currentQuestion);
+    else if (currentQuestion.type === MULTIPLE_CHOICES_QUESTION) loadMultipleChoicesQuestionData(currentQuestion);
 }
 
 function restartCurrentSetOfQAInConfig(question) {
-    timerForQAConfig.currentSetOfQA = {
-        ...timerForQAConfig.currentSetOfQA,
+    currentData.currentSetOfQA = {
+        ...currentData.currentSetOfQA,
         ...question
     };
 }
@@ -242,25 +242,24 @@ function loadWhQuestionData(data) {
 }
 
 function loadSingleChoiceQuestionData(data) {
-    let htmlOfAllChoices = "";
-
-    data.choices.forEach((choice, index) => {
+    //Check for each
+    const htmlOfAllChoices = data.choices.reduce((str, choice, index) => {
         if (data.myAnswer.answerContent === choice.answerContent) {
-            htmlOfAllChoices += `
+            return str += `
               <div class="eachSingleChoiceAnswer">
                 <input type="radio" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveSingleChoiceAnswer(${data.id}, this.value, ${choice.isCorrect})" value="${choice.answerContent}" checked>
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </div>
             `;
         } else {
-            htmlOfAllChoices += `
+            return str += `
               <div class="eachSingleChoiceAnswer">
                 <input type="radio" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveSingleChoiceAnswer(${data.id}, this.value, ${choice.isCorrect})" value="${choice.answerContent}">
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </div>
             `;
         }
-    })
+    }, "")
 
     document.getElementById("questionAndAnswerArea").innerHTML = `
       <div class="eachSetOfQuestionAndAnswer">
@@ -271,27 +270,24 @@ function loadSingleChoiceQuestionData(data) {
 }
 
 function loadMultipleChoicesQuestionData(data) {
-    let htmlOfAllChoices = "";
-
-    data.choices.forEach((choice, index) => {
-        let isExist = false;
-        data.myAnswer.find(item => { if (item.answerContent === choice.answerContent) isExist = true })
+    const htmlOfAllChoices = data.choices.reduce((str, choice, index) => {
+        const isExist = data.myAnswer.map(item => item.answerContent).includes(choice.answerContent);
         if (isExist) {
-            htmlOfAllChoices += `
+            return str += `
               <div class="eachSingleChoiceAnswer">
                 <input type="checkbox" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveMultipleChoicesAnswer(${data.id}, this.value, ${choice.isCorrect}, this.checked)" value="${choice.answerContent}" checked>
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </div>
             `;
         } else {
-            htmlOfAllChoices += `
+            return str += `
               <div class="eachSingleChoiceAnswer">
                 <input type="checkbox" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveMultipleChoicesAnswer(${data.id}, this.value, ${choice.isCorrect}, this.checked)" value="${choice.answerContent}">
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </div>
             `;
         }
-    })
+    }, "")
 
     document.getElementById("questionAndAnswerArea").innerHTML = `
       <div class="eachSetOfQuestionAndAnswer">
@@ -302,68 +298,50 @@ function loadMultipleChoicesQuestionData(data) {
 }
 
 function autosaveWhAnswer(id, value) {
-    timerForQAConfig.listOfItemQA.forEach(currentQA => {
-        if (currentQA.id === id)
-            currentQA.myAnswer = value;
-    });
+    currentData.listOfItemQA.find(currentQA => currentQA.id === id).myAnswer = value;
 }
 
 function autosaveSingleChoiceAnswer(id, value, isCorrect) {
-    timerForQAConfig.listOfItemQA.forEach(currentQA => {
-        if (currentQA.id === id)
-            currentQA.myAnswer = {
-                answerContent: value,
-                isCorrect: isCorrect
-            };
-    })
+    currentData.listOfItemQA.find(currentQA => currentQA.id === id).myAnswer = {
+        answerContent: value,
+        isCorrect: isCorrect
+    };
 }
 
 function autosaveMultipleChoicesAnswer(id, value, isCorrect, isChecked) {
     if (isChecked) {
-        timerForQAConfig.listOfItemQA.forEach(currentQA => {
-            if (currentQA.id === id)
-                currentQA.myAnswer.push({
-                    answerContent: value,
-                    isCorrect: isCorrect
-                })
-        })
+        currentData.listOfItemQA.find(currentQA => currentQA.id === id).myAnswer.push({
+            answerContent: value,
+            isCorrect: isCorrect
+        });
     } else {
-        let newAnswerArr = [];
-        timerForQAConfig.listOfItemQA.forEach(currentQA => {
-            if (currentQA.id === id) {
-                currentQA.myAnswer.forEach(item => {
-                    if (item.answerContent !== value)
-                        newAnswerArr.push(item)
-                })
-                currentQA.myAnswer = newAnswerArr;
-            }
-        })
+        const newAnswerArr = currentData.listOfItemQA.find(currentQA => currentQA.id === id).myAnswer.filter(item => item.answerContent !== value)
+        currentData.listOfItemQA.find(currentQA => currentQA.id === id).myAnswer = newAnswerArr;
     }
 }
 
 // Navigation of QA
 
 function renderQuestionListNavigationForUI() {
-    const newQuestion = timerForQAConfig.listOfItemQA[0];
+    const newQuestion = currentData.listOfItemQA[0];
     renderNavigationButton();
     changeCurrentNavigationButton(newQuestion.id);
 }
 
 function renderNavigationButton() {
-    let htmlOfNavigationButton = "";
-    const listOfItemQA = timerForQAConfig.listOfItemQA;
+    const listOfItemQA = currentData.listOfItemQA;
 
-    for (let i = 0; i < listOfItemQA.length; i++) {
-        htmlOfNavigationButton += `
-          <div id="navigationButton${listOfItemQA[i].id}" class="navigationButton unshowedNavigationButton" onclick="changeCurrentTimerAndQA(${listOfItemQA[i].id})">${i+1}</div>
+    const htmlOfNavigationButton = listOfItemQA.reduce((str, item, index) => {
+        return str += `
+            <div id="navigationButton${listOfItemQA[index].id}" class="navigationButton unshowedNavigationButton" onclick="changeCurrentTimerAndQA(${listOfItemQA[index].id})">${index + 1}</div>
         `;
-    }
+    }, "")
 
     document.getElementById("questionListNavigationBar").innerHTML = htmlOfNavigationButton;
 }
 
 function changeCurrentNavigationButton(id) {
-    const currentNavigationButton = document.getElementById(`navigationButton${timerForQAConfig.currentSetOfQA.id}`);
+    const currentNavigationButton = document.getElementById(`navigationButton${currentData.currentSetOfQA.id}`);
     const newNavigationButton = document.getElementById(`navigationButton${id}`);
 
     if (currentNavigationButton === newNavigationButton) {
@@ -371,7 +349,7 @@ function changeCurrentNavigationButton(id) {
         newNavigationButton.classList.add("showingNavigationButton");
     } else {
         currentNavigationButton.classList.remove("showingNavigationButton");
-        if (timerForQAConfig.currentSetOfQA.durationTime !== 0) currentNavigationButton.classList.add("showedNavigationButton");
+        if (currentData.currentSetOfQA.durationTime !== 0) currentNavigationButton.classList.add("showedNavigationButton");
 
         if (newNavigationButton.classList.contains("showedNavigationButton")) newNavigationButton.classList.remove("showedNavigationButton");
         else newNavigationButton.classList.remove("unshowedNavigationButton");
@@ -380,21 +358,21 @@ function changeCurrentNavigationButton(id) {
 }
 
 function updateOutOfTimeQuestion(index) {
-    timerForQAConfig.listOfItemQA[index].status = OUTOFTIME;
-    document.getElementById(`navigationButton${timerForQAConfig.listOfItemQA[index].id}`).classList.remove("showingNavigationButton");
-    document.getElementById(`navigationButton${timerForQAConfig.listOfItemQA[index].id}`).classList.add("outOfTimeNavigationButton");
+    currentData.listOfItemQA[index].status = OUTOFTIME;
+    document.getElementById(`navigationButton${currentData.listOfItemQA[index].id}`).classList.remove("showingNavigationButton");
+    document.getElementById(`navigationButton${currentData.listOfItemQA[index].id}`).classList.add("outOfTimeNavigationButton");
 }
 
 // Timer
 
 function renderTimerForUI() {
-    const newQuestionId = timerForQAConfig.listOfItemQA[0].id;
+    const newQuestionId = currentData.listOfItemQA[0].id;
     changeCurrentTimerWithNewData(newQuestionId);
 }
 
 function changeCurrentTimerWithNewData(id) {
-    const currentQuestion = timerForQAConfig.listOfItemQA.filter(item => item.id === id)[0];
-    const questionIndex = timerForQAConfig.listOfItemQA.findIndex(item => item.id === id);
+    const currentQuestion = currentData.listOfItemQA.filter(item => item.id === id)[0];
+    const questionIndex = currentData.listOfItemQA.findIndex(item => item.id === id);
 
     activateTimer(currentQuestion.durationTime, questionIndex);
 }
@@ -413,8 +391,8 @@ function activateTimer(timerData, questionIndex) {
         } else {
             deactivateTimer();
             updateOutOfTimeQuestion(questionIndex);
-            if (questionIndex === timerForQAConfig.listOfItemQA.length - 1) changeCurrentTimerAndQA(timerForQAConfig.listOfItemQA[0].id);
-            else changeCurrentTimerAndQA(timerForQAConfig.listOfItemQA[questionIndex + 1].id);
+            if (questionIndex === currentData.listOfItemQA.length - 1) changeCurrentTimerAndQA(currentData.listOfItemQA[0].id);
+            else changeCurrentTimerAndQA(currentData.listOfItemQA[questionIndex + 1].id);
         }
     }, 1000)
 }
@@ -452,18 +430,18 @@ function updateCurrentTimerForUI(detailTimerSet) {
 }
 
 function updateDurationTimeInListItemConfig(questionIndex, timerData) {
-    timerForQAConfig.listOfItemQA[questionIndex].durationTime = timerData;
+    currentData.listOfItemQA[questionIndex].durationTime = timerData;
 }
 
 // Notification
 
 function checkIsFulfillAllQuestion() {
-    let isFulfill = true;
-    timerForQAConfig.listOfItemQA.forEach(item => {
-        if (item.type === "whQuestion" && item.durationTime !== 0 && item.myAnswer === "") isFulfill = false;
-        if (item.type === "singleChoiceQuestion" && item.durationTime !== 0 && item.myAnswer.answerContent === undefined) isFulfill = false;
-        if (item.type === "multipleChoicesQuestion" && item.durationTime !== 0 && item.myAnswer.length === 0) isFulfill = false;
-    })
+    const isFulfill = currentData.listOfItemQA.reduce((state, item) => {
+        if (item.type === WH_QUESTION && item.durationTime !== 0 && item.myAnswer === "") state = false;
+        if (item.type === SINGLE_CHOICE_QUESTION && item.durationTime !== 0 && item.myAnswer.answerContent === undefined) state = false;
+        if (item.type === MULTIPLE_CHOICES_QUESTION && item.durationTime !== 0 && item.myAnswer.length === 0) state = false;
+        return state;
+    }, true)
     return isFulfill;
 }
 
@@ -534,12 +512,12 @@ function renderPopupOfVerifyFinishQA() {
 function verifyFinishQA(isVerified) {
     changeDisplayStatusOfSpecificElement("popupOfVerificationContainer", "hide");
 
-    if (!isVerified) changeCurrentTimerAndQA(timerForQAConfig.currentSetOfQA.id);
+    if (!isVerified) changeCurrentTimerAndQA(currentData.currentSetOfQA.id);
     else finishTimerForQA(true);
 }
 
 // Save data to local storage
 
 function saveAllAnswerDataToLocalStorage() {
-    localStorage.setItem("listOfItemQA", JSON.stringify(timerForQAConfig.listOfItemQA));
+    localStorage.setItem("listOfItemQA", JSON.stringify(currentData.listOfItemQA));
 }

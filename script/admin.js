@@ -1,18 +1,24 @@
 // acronym { QA: Question and Answer }
-const adminPageConfig = {
+const adminPageHtmlElement = {
     htmlOfListItemQA: "",
     correctSymbol: `<span class="symbolOfCorrectAnswer">&#10004;</span>`,
     incorrectSymbol: `<span class="symbolOfIncorrectAnswer">&#10008;</span>`
 };
 
+const typeQAConfig = {
+    WH_QUESTION: "WH_QUESTION",
+    SINGLE_CHOICE_QUESTION: "SINGLE_CHOICE_QUESTION",
+    MULTIPLE_CHOICES_QUESTION: "MULTIPLE_CHOICES_QUESTION"
+};
+
 (function loadAdminPage() {
     const allAnswerData = loadAllAnswerDataFromLocalStorage();
     allAnswerData.forEach((item, index) => {
-        if (item.type === "whQuestion") loadAnswerOfWhQuestionToUI(index, item);
-        else if (item.type === "singleChoiceQuestion") loadAnswerOfSingleChoiceQuestionToUI(index, item);
-        else if (item.type === "multipleChoicesQuestion") loadAnswerOfMultipleChoicesQuestionToUI(index, item);
-    })
-    document.getElementById("listOfItemQA").innerHTML = adminPageConfig.htmlOfListItemQA;
+        if (item.type === typeQAConfig.WH_QUESTION) loadAnswerOfWhQuestionToUI(index, item);
+        else if (item.type === typeQAConfig.SINGLE_CHOICE_QUESTION) loadAnswerOfSingleChoiceQuestionToUI(index, item);
+        else if (item.type === typeQAConfig.MULTIPLE_CHOICES_QUESTION) loadAnswerOfMultipleChoicesQuestionToUI(index, item);
+    });
+    document.getElementById("listOfItemQA").innerHTML = adminPageHtmlElement.htmlOfListItemQA;
 })();
 
 function loadAllAnswerDataFromLocalStorage() {
@@ -20,69 +26,65 @@ function loadAllAnswerDataFromLocalStorage() {
 }
 
 function loadAnswerOfWhQuestionToUI(index, data) {
-    adminPageConfig.htmlOfListItemQA += `
+    adminPageHtmlElement.htmlOfListItemQA += `
         <div class="detailOfEachItemQA">
-            <div class="questionContent"><strong>Question ${index+1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
+            <div class="questionContent"><strong>Question ${index + 1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
             <div class="answerContent"><span>&gt;</span>${data.myAnswer}</div>
         </div>
     `;
 }
 
 function loadAnswerOfSingleChoiceQuestionToUI(index, data) {
-    let singleChoiceSet = "";
-
-    data.choices.forEach((choice, index) => {
+    const singleChoiceSet = data.choices.reduce((str, choice, index) => {
         if (data.myAnswer.answerContent === choice.answerContent) {
-            singleChoiceSet += `
+            return str += `
               <form class="adminPage-eachSingleChoiceAnswer ${choice.isCorrect ? "highlightLabelOfRightChoice" : "highlightLabelOfWrongChoice"}">
                 <input type="radio" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveSingleChoiceAnswer(${data.id}, this.value, ${choice.isCorrect})" value="${choice.answerContent}" checked>
-                <label for="answerChoice${data.id}${index}">${choice.answerContent} ${choice.isCorrect ? adminPageConfig.correctSymbol : adminPageConfig.incorrectSymbol}</label>
+                <label for="answerChoice${data.id}${index}">${choice.answerContent} ${choice.isCorrect ? adminPageHtmlElement.correctSymbol : adminPageHtmlElement.incorrectSymbol}</label>
               </form>
             `;
         } else {
-            singleChoiceSet += `
+            return str += `
               <form class="adminPage-eachSingleChoiceAnswer ${choice.isCorrect && "highlightLabelOfRightChoice"}">
                 <input type="radio" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveSingleChoiceAnswer(${data.id}, this.value, ${choice.isCorrect})" value="${choice.answerContent}">
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </form>
             `;
         }
-    })
+    }, "");
 
-    adminPageConfig.htmlOfListItemQA += `
+    adminPageHtmlElement.htmlOfListItemQA += `
         <div class="detailOfEachItemQA">
-            <div class="questionContent"><strong>Question ${index+1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
+            <div class="questionContent"><strong>Question ${index + 1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
             <div class="answerContent">${singleChoiceSet}</div>
         </div>
     `;
 }
 
 function loadAnswerOfMultipleChoicesQuestionToUI(index, data) {
-    let multipleChoicesSet = "";
-
-    data.choices.forEach((choice, index) => {
-        let isExist = false;
-        data.myAnswer.find(item => { if (item.answerContent === choice.answerContent) isExist = true; })
+    const multipleChoicesSet = data.choices.reduce((str, choice, index) => {
+        //refactor logic
+        const isExist = data.myAnswer.map(item => item.answerContent).includes(choice.answerContent);
         if (isExist) {
-            multipleChoicesSet += `
+            return str += `
               <div class="adminPage-eachMultipleChoicesAnswer ${choice.isCorrect ? "highlightLabelOfRightChoice" : "highlightLabelOfWrongChoice"}">
                 <input type="checkbox" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveMultipleChoicesAnswer(${data.id}, this.value, ${choice.isCorrect}, this.checked)" value="${choice.answerContent}" checked>
-                <label for="answerChoice${data.id}${index}">${choice.answerContent} ${choice.isCorrect ? adminPageConfig.correctSymbol : adminPageConfig.incorrectSymbol} </label>
+                <label for="answerChoice${data.id}${index}">${choice.answerContent} ${choice.isCorrect ? adminPageHtmlElement.correctSymbol : adminPageHtmlElement.incorrectSymbol} </label>
               </div>
             `;
         } else {
-            multipleChoicesSet += `
+            return str += `
               <div class="adminPage-eachMultipleChoicesAnswer ${choice.isCorrect && "highlightLabelOfRightChoice"}">
                 <input type="checkbox" name="answerChoice" id="answerChoice${data.id}${index}" onclick="autosaveMultipleChoicesAnswer(${data.id}, this.value, ${choice.isCorrect}, this.checked)" value="${choice.answerContent}">
                 <label for="answerChoice${data.id}${index}">${choice.answerContent}</label>
               </div>
             `;
         }
-    })
+    }, "")
 
-    adminPageConfig.htmlOfListItemQA += `
+    adminPageHtmlElement.htmlOfListItemQA += `
         <div class="detailOfEachItemQA">
-            <div class="questionContent"><strong>Question ${index+1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
+            <div class="questionContent"><strong>Question ${index + 1}:</strong> ${data.questionContent} <span>(${data.type})</span></div>
             <div class="answerContent answerOfMultipleChoice">${multipleChoicesSet}</div>
         </div>
     `;

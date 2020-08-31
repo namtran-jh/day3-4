@@ -1,6 +1,6 @@
 [{
         "id": 0,
-        "type": "singleChoiceQuestion",
+        "type": "SINGLE_CHOICE_QUESTION",
         "questionContent": "What is the main color of our company's logo?",
         "choices": [{
                 "answerContent": "Blue",
@@ -19,7 +19,7 @@
     },
     {
         "id": 1,
-        "type": "singleChoiceQuestion",
+        "type": "SINGLE_CHOICE_QUESTION",
         "questionContent": "Which studio is better?",
         "choices": [{
             "answerContent": "Marvel",
@@ -32,7 +32,7 @@
     },
     {
         "id": 2,
-        "type": "singleChoiceQuestion",
+        "type": "SINGLE_CHOICE_QUESTION",
         "questionContent": "Inside which HTML element do we put the JavaScript?",
         "choices": [{
             "answerContent": "&lt;script&gt;",
@@ -51,7 +51,7 @@
     },
     {
         "id": 3,
-        "type": "singleChoiceQuestion",
+        "type": "SINGLE_CHOICE_QUESTION",
         "questionContent": "How many characters included in this question?",
         "choices": [{
             "answerContent": "46",
@@ -67,7 +67,7 @@
     },
     {
         "id": 4,
-        "type": "singleChoiceQuestion",
+        "type": "SINGLE_CHOICE_QUESTION",
         "questionContent": "Which laptop is belong to Apple?",
         "choices": [{
             "answerContent": "Macbook Pro 2020",
